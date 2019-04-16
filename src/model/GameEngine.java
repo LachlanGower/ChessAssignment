@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class GameEngine
 {
 	Board board;
-	Player players[] = new Player[2];
+	public Player players[] = new Player[2];
 	Scanner scan;
 	int turnCount = 0;
 	
