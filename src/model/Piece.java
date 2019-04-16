@@ -11,9 +11,9 @@ public class Piece
 	private int type;
 	private int colour;
 	
-	public Piece(int type, int colour) {
-		this.type = type;
+	public Piece(int colour, int type) {
 		this.colour = colour;
+		this.type = type;
 	}
 	
 	public int getColour() {
@@ -28,17 +28,17 @@ public class Piece
 		if(getColour() == WHITE) {
 			if(getType() == BISHOP)
 				return " B ";
-			if(getType() == KNIGHT)
+			else if(getType() == KNIGHT)
 				return " K ";
-			if(getType() == ROOK)
+			else if(getType() == ROOK)
 				return " R ";
 		}
-		if(getColour() == BLACK) {
+		else if(getColour() == BLACK) {
 			if(getType() == BISHOP)
 				return " b ";
-			if(getType() == KNIGHT)
+			else if(getType() == KNIGHT)
 				return " k ";
-			if(getType() == ROOK)
+			else if(getType() == ROOK)
 				return " r ";
 		}
 		return "   ";

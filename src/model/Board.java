@@ -9,17 +9,17 @@ public class Board
 	public Board() {
 		board = new Piece[COLS][ROWS];
 		board[0][0] = new Piece(Piece.BLACK,Piece.ROOK);
-		board[0][1] = new Piece(Piece.BLACK,Piece.KNIGHT);
-		board[0][2] = new Piece(Piece.BLACK,Piece.BISHOP);
-		board[0][3] = new Piece(Piece.BLACK,Piece.BISHOP);
-		board[0][4] = new Piece(Piece.BLACK,Piece.KNIGHT);
-		board[0][5] = new Piece(Piece.BLACK,Piece.ROOK);
+		board[1][0] = new Piece(Piece.BLACK,Piece.KNIGHT);
+		board[2][0] = new Piece(Piece.BLACK,Piece.BISHOP);
+		board[3][0] = new Piece(Piece.BLACK,Piece.BISHOP);
+		board[4][0] = new Piece(Piece.BLACK,Piece.KNIGHT);
+		board[5][0] = new Piece(Piece.BLACK,Piece.ROOK);
 		
-		board[5][0] = new Piece(Piece.WHITE,Piece.ROOK);
-		board[5][1] = new Piece(Piece.WHITE,Piece.KNIGHT);
-		board[5][2] = new Piece(Piece.WHITE,Piece.BISHOP);
-		board[5][3] = new Piece(Piece.WHITE,Piece.BISHOP);
-		board[5][4] = new Piece(Piece.WHITE,Piece.KNIGHT);
+		board[0][5] = new Piece(Piece.WHITE,Piece.ROOK);
+		board[1][5] = new Piece(Piece.WHITE,Piece.KNIGHT);
+		board[2][5] = new Piece(Piece.WHITE,Piece.BISHOP);
+		board[3][5] = new Piece(Piece.WHITE,Piece.BISHOP);
+		board[4][5] = new Piece(Piece.WHITE,Piece.KNIGHT);
 		board[5][5] = new Piece(Piece.WHITE,Piece.ROOK);
 
 
@@ -39,6 +39,7 @@ public class Board
 		if(currentPiece.getType() == Piece.ROOK) {
 			if(isLegalRookMove(newX - x, newY - y)) {
 				if(this.getPiece(newX, newY) != null) {
+					System.out.println(this.getPiece(newX, newY).getColour() + " at " + newX + " " + newY);
 					if(this.getPiece(newX, newY).getColour() != colour) {
 						board[x][y] = null;
 						board[newX][newY] = currentPiece;
@@ -144,14 +145,17 @@ public class Board
 	
 	public String toString() {
 		String boardString = "";
-		for(int x = 0;x < COLS; x ++) {
-			for(int y = 0; y < ROWS; y ++) {
+		boardString += "  0  1  2  3  4  5 ";
+		for(int y = 0;y < ROWS; y ++) {
+			boardString += "\n" + y;
+			for(int x = 0; x < COLS; x ++) {
 				if(board[x][y] == null) {
-					boardString += "   ";
+					boardString += " . ";
 				}
 				else
 					boardString += board[x][y].toString();
 			}
+			
 		}
 			
 		return boardString;

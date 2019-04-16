@@ -1,13 +1,14 @@
 package client;
 
+import model.GameEngine;
+
 public class Driver
 {
 
 	public static void main(String[] args)
 	{
-		// TODO Auto-generated method stub
-		System.out.println("stuff happens");
-		//yes
+		GameEngine ge = new GameEngine();
+		ge.start();
 	}
 
 }
