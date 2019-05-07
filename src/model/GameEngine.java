@@ -1,80 +1,87 @@
 package model;
-
-import java.util.Scanner;
-
+/*
+ * 0 = white
+ * 1 = black
+ */
 public class GameEngine
 {
-	Board board;
-	public Player players[] = new Player[2];
-	Scanner scan;
-	int turnCount = 0;
+
+	private Board board;
+	private Player[] players;
+	private int playersLength;
+	private int turnCount = 0;
+	private ChessColour turn;
+	private Coord selectedPiece;
+
 	
-	public void start() {
+	public GameEngine(){
+		players = new Player[2];
+		playersLength = 0;
 		board = new Board();
-		scan = new Scanner(System.in);
-		System.out.println("Welcome to Baby Chess");
-		
-		System.out.print("Player 1 Input Name: ");
-		String user = scan.nextLine();
-		System.out.print("Player1 Input Password: ");
-		String pass = scan.nextLine();
-		players[0] = new Player(user, pass);
-		
-		System.out.print("Player 2 Input Name: ");
-		user = scan.nextLine();
-		System.out.print("Player 2 Input Password: ");
-		pass = scan.nextLine();
-		players[1] = new Player(user, pass);
-		
-		System.out.print("Player 1 Input Turn Count: ");
-		turnCount = scan.nextInt();
-		System.out.print("Player 2 Input Turn Count: ");
-		turnCount += scan.nextInt();
-		turnCount /= 2;
-		System.out.println("Turn Count = " + turnCount);
-		
-		for(int t = 0; t < turnCount;t++) {
-			nextTurn((t % 2) + 1);
-		}
-		endGame(-1);
 	}
-
-	private void nextTurn(int player)
-	{
-		System.out.println("Player " + player + "'s turn");
-		System.out.println(board.toString() + "\n");
-		System.out.println("Make Your Move <X> <Y> <toX> <toY>");
-		try
-		{
-			players[player-1].setScore(
-					board.movePiece(
-							scan.nextInt(),
-							scan.nextInt(),
-							scan.nextInt(),
-							scan.nextInt(),
-							player - 1));
-		} catch (CoordinateOutOfBoundsException | PieceNullPointerException | IllegalMoveException e)
-		{
-			System.out.print(e);
-			nextTurn(player);
-		}
-		if(players[player-1].getScore() == 30) {
-			endGame(player - 1);
-		}
+	
+	public void createGame(int turnCount) throws Exception {
+		if(playersLength != 2) {throw new Not2PlayersException();}
+		this.turnCount = turnCount;
+		turn = ChessColour.WHITE;
 	}
-
-	private void endGame(int champion)
-	{
-		if(champion == -1) {
-			if(players[0].getScore() > players[1].getScore())
-				champion = 0;
-			else if(players[0].getScore() < players[1].getScore())
-				champion = 1;
-			else {
-				System.out.println("Draw Winner, Turn Count Exceeded");
+	public Board getBoard() {
+		return board;
+	}
+	public Player[] getPlayers() {
+		return players;
+	}
+	public int getAmountOfPlayers() {
+		return playersLength;
+	}
+	public void createPlayer(Player newPlayer) throws Exception {
+		if(playersLength > 1) 
+			throw new Exception();
+		for(Player player : players) {
+			if(player != null) {
+				if(player.getName().equals(newPlayer.getName())) {
+					throw new Exception();
+				}
 			}
 		}
-		if(champion != -1)
-			System.out.println("Player " + champion + " has Won with a score of " + players[champion].getScore());
+		players[playersLength] = newPlayer; 
+		playersLength++;
+	}
+
+	public Player nextTurn()
+	{
+		if(turn == ChessColour.BLACK){
+			turn = ChessColour.WHITE;
+		}
+		else if(turn == ChessColour.WHITE){
+			turn = ChessColour.BLACK;
+		}
+		turnCount--;
+		return players[turn.ordinal()];
+	}
+
+	public int getTurnsRemaining()
+	{
+		return turnCount;
+	}
+
+	public ChessColour getTurnColour()
+	{
+		return turn;
+	}
+
+	public Coord getSelectedPiece()
+	{
+		return selectedPiece;
+	}
+	public void setSelectedPiece(Coord newXY)
+	{
+		selectedPiece = newXY;
+	}
+
+	public String endgame()
+	{
+		//if(player)
+		return null;
 	}
 }

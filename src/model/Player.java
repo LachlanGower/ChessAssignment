@@ -5,10 +5,12 @@ public class Player {
 	private String name;
 	private String password;
 	private int score;
+	private ChessColour colour;
 	
-	public Player(String name, String password) {
+	public Player(String name, String password, ChessColour colour) {
 		this.name = name;
 		this.password = password;
+		this.colour = colour;
 	}
 	
 	public int getScore() {
@@ -19,12 +21,25 @@ public class Player {
 		this.score = score;
 	}
 	
+	public void addScore(int score) {
+		this.score += score;
+	}
+	
 	public String getName() {
 		return name;
 	}
-	
-	public String getPassword() {
-		return password;
+
+	public ChessColour getColour() {
+		return colour;
+	}
+
+	public String getColourString()
+	{
+		if(colour == ChessColour.WHITE)
+			return "White";
+		else if(colour == ChessColour.BLACK)
+			return "Black";
+		return "";
 	}
 
 }

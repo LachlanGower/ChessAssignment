@@ -2,8 +2,8 @@ package model;
 
 public class PieceNullPointerException extends Exception
 {
-	public PieceNullPointerException()
+	public PieceNullPointerException(String string)
 	{
-		super("Piece Does Not Exist At Those Coordinates");
+		super(string + "\n");
 	}
 }
