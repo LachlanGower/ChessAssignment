@@ -11,6 +11,7 @@ public class Player {
 		this.name = name;
 		this.password = password;
 		this.colour = colour;
+		this.score = 0;
 	}
 	
 	public int getScore() {
