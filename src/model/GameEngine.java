@@ -9,7 +9,7 @@ public class GameEngine
 	private Player[] players;
 	private int playersLength;
 	private int turnCount = 0;
-	private int turn;
+	private ChessColour turn;
 	private Coord selectedPiece;
 	
 	public GameEngine(){
@@ -21,7 +21,7 @@ public class GameEngine
 	public void createGame(int turnCount) throws Exception {
 		if(playersLength != 2) {throw new Not2PlayersException();}
 		this.turnCount = turnCount;
-		turn = -1;
+		turn = ChessColour.WHITE;
 	}
 	public Board getBoard() {
 		return board;
@@ -48,9 +48,14 @@ public class GameEngine
 
 	public Player nextTurn()
 	{
-		turn = (turn + 1) % 2;
+		if(turn == ChessColour.BLACK){
+			turn = ChessColour.WHITE;
+		}
+		else if(turn == ChessColour.WHITE){
+			turn = ChessColour.BLACK;
+		}
 		turnCount--;
-		return players[turn];
+		return players[turn.ordinal()];
 	}
 
 	public int getTurnsRemaining()
@@ -58,7 +63,7 @@ public class GameEngine
 		return turnCount;
 	}
 
-	public int getTurnColour()
+	public ChessColour getTurnColour()
 	{
 		return turn;
 	}
@@ -74,7 +79,7 @@ public class GameEngine
 
 	public String endgame()
 	{
-		if(player)
+		//if(player)
 		return null;
 	}
 }
