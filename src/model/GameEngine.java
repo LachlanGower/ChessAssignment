@@ -5,12 +5,14 @@ package model;
  */
 public class GameEngine
 {
+
 	private Board board;
 	private Player[] players;
 	private int playersLength;
 	private int turnCount = 0;
 	private ChessColour turn;
 	private Coord selectedPiece;
+
 	
 	public GameEngine(){
 		players = new Player[2];
