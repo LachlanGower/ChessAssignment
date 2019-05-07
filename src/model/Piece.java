@@ -2,45 +2,34 @@ package model;
 
 public class Piece
 {
-	public static final int WHITE = ChessColour.WHITE.ordinal();
-	public static final int BLACK = ChessColour.BLACK.ordinal();
-	public static final int BISHOP = 0;
-	public static final int KNIGHT = 1;
-	public static final int ROOK = 2;
 	
-	private int type;
-	private int colour;
+	private PieceType[] types;
+	private ChessColour colour;
 	
-	public Piece(int colour, int type) {
+	public Piece(ChessColour colour, PieceType type) {
+		types = new PieceType[2];
 		this.colour = colour;
-		this.type = type;
+		this.types[0] = type;
 	}
 	
-	public int getColour() {
+	public ChessColour getColour() {
 		return colour;
 	}
 	
-	public int getType() {
-		return type;
+	public PieceType[] getTypes() {
+		return types;
 	}
 	
 	public String toString() {
-		if(getColour() == WHITE) {
-			if(getType() == BISHOP)
-				return " B ";
-			else if(getType() == KNIGHT)
-				return " K ";
-			else if(getType() == ROOK)
-				return " R ";
+		
+		if(getColour() == ChessColour.WHITE) {
+			 
 		}
-		else if(getColour() == BLACK) {
-			if(getType() == BISHOP)
-				return " b ";
-			else if(getType() == KNIGHT)
-				return " k ";
-			else if(getType() == ROOK)
-				return " r ";
+		else if(getColour() == ChessColour.BLACK) {
+			
 		}
 		return "   ";
 	}
 }
+
+//

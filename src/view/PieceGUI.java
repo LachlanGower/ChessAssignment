@@ -15,7 +15,7 @@ public class PieceGUI extends Group
 		this.x = x;
 		this.y = y;
 		this.addEventHandler(MouseEvent.MOUSE_CLICKED, new SelectPieceHandler(gui.getGameEngine()));
-		ImageView pieceImage = new ImageView(PieceFactory.getPiece(piece.getColour(), piece.getType()));
+		ImageView pieceImage = new ImageView(PieceFactory.getPiece(piece.getColour(), piece.getTypes()));
 		getChildren().add(pieceImage);
 		setLayoutX(x*60 + 20);
 		setLayoutY(y*60 + 50);

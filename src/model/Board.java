@@ -9,19 +9,19 @@ public class Board
 	public Board()
 	{
 		board = new Piece[COLS][ROWS];
-		board[0][0] = new Piece(Piece.BLACK, Piece.ROOK);
-		board[1][0] = new Piece(Piece.BLACK, Piece.KNIGHT);
-		board[2][0] = new Piece(Piece.BLACK, Piece.BISHOP);
-		board[3][0] = new Piece(Piece.BLACK, Piece.BISHOP);
-		board[4][0] = new Piece(Piece.BLACK, Piece.KNIGHT);
-		board[5][0] = new Piece(Piece.BLACK, Piece.ROOK);
+		board[0][0] = new Piece(ChessColour.BLACK, PieceType.ROOK);
+		board[1][0] = new Piece(ChessColour.BLACK, PieceType.KNIGHT);
+		board[2][0] = new Piece(ChessColour.BLACK, PieceType.BISHOP);
+		board[3][0] = new Piece(ChessColour.BLACK, PieceType.BISHOP);
+		board[4][0] = new Piece(ChessColour.BLACK, PieceType.KNIGHT);
+		board[5][0] = new Piece(ChessColour.BLACK, PieceType.ROOK);
 
-		board[0][5] = new Piece(Piece.WHITE, Piece.ROOK);
-		board[1][5] = new Piece(Piece.WHITE, Piece.KNIGHT);
-		board[2][5] = new Piece(Piece.WHITE, Piece.BISHOP);
-		board[3][5] = new Piece(Piece.WHITE, Piece.BISHOP);
-		board[4][5] = new Piece(Piece.WHITE, Piece.KNIGHT);
-		board[5][5] = new Piece(Piece.WHITE, Piece.ROOK);
+		board[0][5] = new Piece(ChessColour.WHITE, PieceType.ROOK);
+		board[1][5] = new Piece(ChessColour.WHITE, PieceType.KNIGHT);
+		board[2][5] = new Piece(ChessColour.WHITE, PieceType.BISHOP);
+		board[3][5] = new Piece(ChessColour.WHITE, PieceType.BISHOP);
+		board[4][5] = new Piece(ChessColour.WHITE, PieceType.KNIGHT);
+		board[5][5] = new Piece(ChessColour.WHITE, PieceType.ROOK);
 
 	}
 
@@ -35,7 +35,7 @@ public class Board
 		return piece;
 	}
 
-	public Coord selectPiece(Coord c, int colour)
+	public Coord selectPiece(Coord c, ChessColour colour)
 	{
 		Piece piece = getPiece(c);
 		if (piece == null || piece.getColour() != colour)
@@ -47,22 +47,23 @@ public class Board
 	public Piece[][] getBoard(){
 		return board;
 	}
-	public int movePiece(Coord xy, Coord newXY, int colour) throws IllegalMoveException, PieceNullPointerException
+	public int movePiece(Coord xy, Coord newXY, ChessColour colour) throws IllegalMoveException, PieceNullPointerException
 	{
 		Piece piece = getPiece(xy);
-		MoveStrategy ms = null;
 		int score = -1;
 		if (piece != null)
 		{
-			if (piece.getType() == Piece.ROOK)
-			{
-				ms = new RookStrategy();
-			} else if (piece.getType() == Piece.KNIGHT)
-			{
-				ms = new KnightStrategy();
-			} else if (piece.getType() == Piece.BISHOP)
-			{
-				ms = new BishopStrategy();
+			MoveStrategy ms = new MoveStrategy();
+			for(PieceType type : piece.getTypes()) {
+				if(type == PieceType.BISHOP) {
+					ms.add(new BishopStrategy());
+				}
+				if(type == PieceType.ROOK) {
+					ms.add(new RookStrategy());
+				}
+				if(type == PieceType.KNIGHT) {
+					ms.add(new KnightStrategy());
+}
 			}
 			if (ms.isLegalMove(xy.getX() - newXY.getX(), xy.getY() - newXY.getY()))
 			{
@@ -74,10 +75,12 @@ public class Board
 						board[newXY.getX()][newXY.getY()] = piece;
 						score = 5;
 					}
-					else {
-						score = 0;
-					}
 					// merge implement here
+					else {
+						board[xy.getX()][xy.getY()] = null;
+						board[newXY.getX()][newXY.getY()] = piece;
+					}
+					
 				} else
 				{
 					board[xy.getX()][xy.getY()] = null;

@@ -9,7 +9,7 @@ public class GameEngine
 	private Player[] players;
 	private int playersLength;
 	private int turnCount = 0;
-	private int turn;
+	private ChessColour turn;
 	private Coord selectedPiece;
 	
 	public GameEngine(){
@@ -21,7 +21,7 @@ public class GameEngine
 	public void createGame(int turnCount) throws Exception {
 		if(playersLength != 2) {throw new Not2PlayersException();}
 		this.turnCount = turnCount;
-		turn = -1;
+		turn = ChessColour.WHITE;
 	}
 	public Board getBoard() {
 		return board;
@@ -48,9 +48,14 @@ public class GameEngine
 
 	public Player nextTurn()
 	{
-		turn = (turn + 1) % 2;
+		if(turn == ChessColour.BLACK){
+			turn = ChessColour.WHITE;
+		}
+		else if(turn == ChessColour.WHITE){
+			turn = ChessColour.BLACK;
+		}
 		turnCount--;
-		return players[turn];
+		return players[turn.ordinal()];
 	}
 
 	public int getTurnsRemaining()
@@ -58,7 +63,7 @@ public class GameEngine
 		return turnCount;
 	}
 
-	public int getTurnColour()
+	public ChessColour getTurnColour()
 	{
 		return turn;
 	}
@@ -71,10 +76,20 @@ public class GameEngine
 	{
 		selectedPiece = newXY;
 	}
-
-	public String endgame()
+	public String winningPlayer()
 	{
-		if(player)
-		return null;
+		
+		if(getPlayers()[0].getScore() > getPlayers()[1].getScore()) {
+			return getPlayers()[0].getName() + " has Won!";
+		}
+		else if(getPlayers()[1].getScore() > getPlayers()[0].getScore()) {
+			return getPlayers()[1].getName() + " has Won!";
+		}
+		else if(getPlayers()[0].getScore() == getPlayers()[1].getScore()) {
+			return "Draw";
+		}
+		return "You've managed to break our game. Good job.";
 	}
+
+	
 }
