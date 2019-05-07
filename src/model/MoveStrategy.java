@@ -18,9 +18,11 @@ public class MoveStrategy
 	public boolean isLegalMove(int dx, int dy) {
 		boolean legal = false;
 		for(MoveStrategy strategy: strategies) {
-			//check all strategies, if a move is legal 
-			//OR gate will keep legal true for next check.
-			legal = legal || strategy.isLegalMove(dx, dy);
+			if(strategy != null) {
+				//check all strategies, if a move is legal 
+				//OR gate will keep legal true for next check.
+				legal = legal || strategy.isLegalMove(dx, dy);
+			}
 		}
 		return legal;
 	}

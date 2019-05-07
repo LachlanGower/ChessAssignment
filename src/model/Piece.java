@@ -19,6 +19,35 @@ public class Piece
 	public PieceType[] getTypes() {
 		return types;
 	}
+	public MoveStrategy getMoveStrategy() {
+		//Composition of Strategies
+		MoveStrategy ms = new MoveStrategy();
+		for(PieceType type : getTypes()) {
+			if(type == PieceType.BISHOP) {
+				ms.add(new BishopStrategy());
+			}
+			else if(type == PieceType.ROOK) {
+				ms.add(new RookStrategy());
+			}
+			else if(type == PieceType.KNIGHT) {
+				ms.add(new KnightStrategy());
+}
+		}
+		return ms;
+	}
+	
+	public boolean addType(Piece piece) {
+		if(piece.getTypes()[1] == null && getTypes()[1] == null) {
+			if(getTypes()[0] == piece.getTypes()[0]) {
+				return false;
+			}else {
+				types[1] = piece.getTypes()[0];
+				return true;
+			}
+		}
+		else
+			return false;
+	}
 	
 	public String toString() {
 		

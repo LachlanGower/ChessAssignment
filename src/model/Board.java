@@ -27,7 +27,10 @@ public class Board
 		board[5][5] = new Piece(ChessColour.WHITE, PieceType.ROOK);
 
 	}
-
+	public Piece[][] getBoard(){
+		return board;
+	}
+	//CHECK COORDINATE FOR A PIECE, return piece
 	public Piece getPiece(Coord c)
 	{
 		Piece piece;
@@ -37,7 +40,7 @@ public class Board
 			piece = null;
 		return piece;
 	}
-
+	//CHECK COORDINATE FOR A PIECE OF COLOUR, return coordinate
 	public Coord selectPiece(Coord c, ChessColour colour)
 	{
 		Piece piece = getPiece(c);
@@ -47,63 +50,57 @@ public class Board
 		}
 		return c;
 	}
-	public Piece[][] getBoard(){
-		return board;
-	}
+	//MOVE PIECES FROM ONE COORDINATE TO ANOTHER, VALIDATE COLOUR AND LEGAL MOVES SETS
 	public int movePiece(Coord xy, Coord newXY, ChessColour colour) throws IllegalMoveException, PieceNullPointerException
 	{
 		Piece piece = getPiece(xy);
 		int score = -1;
 		if (piece != null)
 		{
-			MoveStrategy ms = new MoveStrategy();
-			for(PieceType type : piece.getTypes()) {
-				if(type == PieceType.BISHOP) {
-					ms.add(new BishopStrategy());
-				}
-				if(type == PieceType.ROOK) {
-					ms.add(new RookStrategy());
-				}
-				if(type == PieceType.KNIGHT) {
-					ms.add(new KnightStrategy());
-}
-			}
-			if (ms.isLegalMove(xy.getX() - newXY.getX(), xy.getY() - newXY.getY()))
+			if (piece.getMoveStrategy().isLegalMove(xy.getX() - newXY.getX(), xy.getY() - newXY.getY()))
 			{
 				if (getPiece(newXY) != null)
 				{
+					//TAKE OPPONENTS PIECE
 					if (getPiece(newXY).getColour() != colour)
 					{
 						board[xy.getX()][xy.getY()] = null;
 						board[newXY.getX()][newXY.getY()] = piece;
 						score = 5;
 					}
-					// merge implement here
+					//MERGE PIECES
 					else {
+						piece.addType(board[newXY.getX()][newXY.getY()]);
 						board[xy.getX()][xy.getY()] = null;
 						board[newXY.getX()][newXY.getY()] = piece;
+						score = 0;
 					}
 					
-				} else
-				{
+				} 
+				//MOVE TO EMPTY SPACE
+				else{
 					board[xy.getX()][xy.getY()] = null;
 					board[newXY.getX()][newXY.getY()] = piece;
 					score = 0;
 				}
-			} else
-			{
+			}
+			//MOVE TO POSITION OUT OF MOVE SET
+			else{
 				throw new IllegalMoveException("Cannot Move Here Please Try Again\n");
 			}
 		}
-		else 
-		{
+		//PIECE NOT SELECTED
+		else {
 			throw new PieceNullPointerException("You done goofed");
 		}
 		return score;
 	}
 
+	
+	//CONSOLE GUI FUNCTION
 	public String toString()
 	{
+		//RECREATE THIS FUNCTION
 		String boardString = "";
 		boardString += "  0  1  2  3  4  5 ";
 		for (int y = 0; y < ROWS; y++)
