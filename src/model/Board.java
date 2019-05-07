@@ -1,5 +1,8 @@
 package model;
 
+import exceptions.IllegalMoveException;
+import exceptions.PieceNullPointerException;
+
 public class Board
 {
 	private final int ROWS = 6;
