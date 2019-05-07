@@ -4,6 +4,7 @@ import javafx.event.EventHandler;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import model.ChessColour;
 import model.Player;
 import view.CreateGameMenuGUI;
 import view.GraphicsEngine;
@@ -26,7 +27,7 @@ public class CreatePlayerHandler implements EventHandler<MouseEvent>
 	{
 		try
 		{
-			gui.getGameEngine().createPlayer(new Player(user.getText(), pass.getText(),gui.getGameEngine().getAmountOfPlayers()));
+			gui.getGameEngine().createPlayer(new Player(user.getText(), pass.getText(),(gui.getGameEngine().getAmountOfPlayers() == 0) ? ChessColour.WHITE : ChessColour.BLACK));
 			menu.addPlayerModal(gui.getGameEngine().getAmountOfPlayers() - 1, user.getText());
 		} catch (Exception e)
 		{

@@ -21,10 +21,9 @@ public class MovePieceHandler implements EventHandler<MouseEvent>
 	@Override
 	public void handle(MouseEvent e)
 	{
-		System.out.println("fun facts: " + e.getSource().toString());
 		try
 		{
-			gui.getGameEngine().getPlayers()[gui.getGameEngine().getTurnColour()].addScore( 
+			gui.getGameEngine().getPlayers()[gui.getGameEngine().getTurnColour().ordinal()].addScore( 
 					gui.getGameEngine().getBoard().movePiece(gui.getGameEngine().getSelectedPiece(),
 					new Coord(e.getSource().toString()),
 					gui.getGameEngine().getTurnColour()));

@@ -77,10 +77,8 @@ public class Board
 					}
 					// merge implement here
 					else {
-						PieceType type = getPiece(newXY).getTypes(); 
 						board[xy.getX()][xy.getY()] = null;
 						board[newXY.getX()][newXY.getY()] = piece;
-						piece.
 					}
 					
 				} else
