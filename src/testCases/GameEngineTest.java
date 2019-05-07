@@ -6,7 +6,7 @@ import org.junit.Test;
 
 import model.ChessColour;
 import model.GameEngine;
-import model.Not2PlayersException;
+import exceptions.Not2PlayersException;
 import model.Player;
 
 public class GameEngineTest {

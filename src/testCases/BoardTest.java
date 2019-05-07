@@ -11,9 +11,6 @@ import exceptions.PieceNullPointerException;
 import model.Board;
 import model.ChessColour;
 import model.Coord;
-import model.CoordinateOutOfBoundsException;
-import model.IllegalMoveException;
-import model.PieceNullPointerException;
 
 public class BoardTest {
 	
@@ -47,6 +44,20 @@ public class BoardTest {
 		Coord currentPos = new Coord(0,0);
 		Coord newPos = new Coord(0,7);
 		board.movePiece(currentPos, newPos, ChessColour.WHITE);
+	}
+	
+	@Test(expected=IllegalMoveException.class)
+	public void cantJumpTest() throws IllegalMoveException, PieceNullPointerException, CoordinateOutOfBoundsException
+	{
+		Coord currentPos = new Coord(0,0);
+		Coord newPos = new Coord(0,2);
+		board.movePiece(currentPos, newPos, ChessColour.WHITE);
+		currentPos = new Coord(0,2);
+		newPos = new Coord(0,4);
+		board.movePiece(currentPos, newPos, ChessColour.WHITE);
+		currentPos = new Coord(0,5);
+		newPos = new Coord(0,3);
+		board.movePiece(currentPos, newPos, ChessColour.BLACK);
 	}
 
 }
