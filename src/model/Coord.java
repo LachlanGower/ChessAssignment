@@ -1,5 +1,7 @@
 package model;
 
+import exceptions.CoordinateOutOfBoundsException;
+
 public class Coord {
 	private int x;
 	private int y;

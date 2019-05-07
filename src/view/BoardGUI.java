@@ -1,10 +1,10 @@
 package view;
 
+import exceptions.CoordinateOutOfBoundsException;
 import javafx.scene.Group;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import model.Coord;
-import model.CoordinateOutOfBoundsException;
 
 public class BoardGUI extends Group
 {
@@ -24,7 +24,7 @@ public class BoardGUI extends Group
 		Font font = new Font("Verdana",30);
 
 		currentPlayer = new Text();
-		currentPlayer.setText(gui.getGameEngine().nextTurn().getName()+ "'s Turn");
+		currentPlayer.setText(gui.getGameEngine().getCurrentPlayer().getName()+ "'s Turn");
 		currentPlayer.setX(20);
 		currentPlayer.setY(40);
 		currentPlayer.setFont(font);
@@ -58,7 +58,7 @@ public class BoardGUI extends Group
 		getChildren().add(color2);
 		getChildren().add(player2Score);
 
-		turns = new Text("Turns Remaining: " + gui.getGameEngine().getTurnsRemaining());
+		turns = new Text("Turns Remaining: " + gui.getGameEngine().getGameState().getTurnsRemaining());
 		turns.setX(20);
 		turns.setY(480);
 		turns.setFont(font);
@@ -82,10 +82,10 @@ public class BoardGUI extends Group
 		}
 	}
 	public void reDraw() {
-		currentPlayer.setText(gui.getGameEngine().nextTurn().getName()+ "'s Turn");
+		currentPlayer.setText(gui.getGameEngine().getCurrentPlayer().getName()+ "'s Turn");
 		player1Score.setText("Score: " + (gui.getGameEngine().getPlayers()[0].getScore()));
 		player2Score.setText("Score: " + (gui.getGameEngine().getPlayers()[1].getScore()));
-		turns.setText("Turns Remaining: " + gui.getGameEngine().getTurnsRemaining());
+		turns.setText("Turns Remaining: " + gui.getGameEngine().getGameState().getTurnsRemaining());
 		for(PieceGUI piece : pieces) {
 			getChildren().remove(piece);
 		}

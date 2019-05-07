@@ -1,5 +1,6 @@
 package model;
 
+import exceptions.Not2PlayersException;
 /*
  * 0 = white
  * 1 = black
@@ -9,9 +10,7 @@ public class GameEngine
 	private Board board;
 	private Player[] players;
 	private int playersLength;
-	private int turnCount = 0;
-	private ChessColour turn;
-	private Coord selectedPiece;
+	private GameState gs;
 	
 	public GameEngine(){
 		players = new Player[2];
@@ -21,8 +20,7 @@ public class GameEngine
 	
 	public void createGame(int turnCount) throws Exception {
 		if(playersLength != 2) {throw new Not2PlayersException();}
-		this.turnCount = turnCount;
-		turn = ChessColour.WHITE;
+		gs = new GameState(turnCount);
 	}
 	public Board getBoard() {
 		return board;
@@ -46,51 +44,28 @@ public class GameEngine
 		players[playersLength] = newPlayer; 
 		playersLength++;
 	}
-
-	public Player nextTurn()
+	public Player getCurrentPlayer()
 	{
-		if(turn == ChessColour.BLACK){
-			turn = ChessColour.WHITE;
-		}
-		else if(turn == ChessColour.WHITE){
-			turn = ChessColour.BLACK;
-		}
-		turnCount--;
-		return players[turn.ordinal()];
+		return players[gs.getTurnColour().ordinal()];
 	}
-
-	public int getTurnsRemaining()
+	public Player getWinningPlayer()
 	{
-		return turnCount;
-	}
-
-	public ChessColour getTurnColour()
-	{
-		return turn;
+		if(players[0].getScore() > players[1].getScore())
+		{
+			return players[0];
+		}
+		else if(players[1].getScore() > players[0].getScore())
+		{
+			return players[1];
+		}
+		else {
+			return null;
+		}
 	}
 
-	public Coord getSelectedPiece()
+	public GameState getGameState()
 	{
-		return selectedPiece;
+		return gs;
 	}
-	public void setSelectedPiece(Coord newXY)
-	{
-		selectedPiece = newXY;
-	}
-	public String winningPlayer()
-	{
-		
-		if(getPlayers()[0].getScore() > getPlayers()[1].getScore()) {
-			return getPlayers()[0].getName() + " has Won!";
-		}
-		else if(getPlayers()[1].getScore() > getPlayers()[0].getScore()) {
-			return getPlayers()[1].getName() + " has Won!";
-		}
-		else if(getPlayers()[0].getScore() == getPlayers()[1].getScore()) {
-			return "Draw";
-		}
-		return "You've managed to break our game. Good job.";
-	}
-
 	
 }

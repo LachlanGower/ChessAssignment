@@ -1,8 +1,8 @@
 package controller;
 
+import exceptions.Not2PlayersException;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
-import model.Not2PlayersException;
 import view.BoardGUI;
 import view.GraphicsEngine;
 import view.PlayerModalGUI;
