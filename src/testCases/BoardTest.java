@@ -6,13 +6,14 @@ import org.junit.Before;
 import org.junit.Test;
 
 import model.Board;
+import model.ChessColour;
+import model.Coord;
 import model.CoordinateOutOfBoundsException;
 import model.IllegalMoveException;
-import model.Piece;
 import model.PieceNullPointerException;
 
-public class BoardTest
-{
+public class BoardTest {
+	
 	Board board;
 	
 	@Before
@@ -21,21 +22,28 @@ public class BoardTest
 		board = new Board();
 	}
 
-	@Test
-	public void RookMovesTest()
+	@Test(expected=IllegalMoveException.class)
+	public void RookMovesTest() throws IllegalMoveException, PieceNullPointerException, CoordinateOutOfBoundsException
 	{
-		//
-		/*
-		try
-		{
-			Piece piece = board.getPiece(0, 0);
-			board.movePiece(0,0,0,1,1);
-			assert(board.getPiece(0, 1) == piece);
-		} catch (CoordinateOutOfBoundsException | PieceNullPointerException | IllegalMoveException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}*/
+		Coord currentPos = new Coord(0,0);
+		Coord newPos = new Coord(0,4);
+		board.movePiece(currentPos, newPos, ChessColour.WHITE);
+	}
+	
+	@Test(expected=PieceNullPointerException.class)
+	public void selectPieceTest() throws IllegalMoveException, PieceNullPointerException, CoordinateOutOfBoundsException
+	{
+		Coord currentPos = new Coord(2,2);
+		Coord newPos = new Coord(0,4);
+		board.movePiece(currentPos, newPos, ChessColour.WHITE);
+	}
+	
+	@Test(expected=CoordinateOutOfBoundsException.class)
+	public void cantMovePieceOffBoardTest() throws IllegalMoveException, PieceNullPointerException, CoordinateOutOfBoundsException
+	{
+		Coord currentPos = new Coord(0,0);
+		Coord newPos = new Coord(0,7);
+		board.movePiece(currentPos, newPos, ChessColour.WHITE);
 	}
 
 }
