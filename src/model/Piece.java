@@ -2,8 +2,8 @@ package model;
 
 public class Piece
 {
-	public static final int WHITE = 0;
-	public static final int BLACK = 1;
+	public static final int WHITE = ChessColour.WHITE.ordinal();
+	public static final int BLACK = ChessColour.BLACK.ordinal();
 	public static final int BISHOP = 0;
 	public static final int KNIGHT = 1;
 	public static final int ROOK = 2;

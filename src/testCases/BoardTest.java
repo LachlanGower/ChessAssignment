@@ -25,6 +25,7 @@ public class BoardTest
 	public void RookMovesTest()
 	{
 		//
+		/*
 		try
 		{
 			Piece piece = board.getPiece(0, 0);
@@ -34,7 +35,7 @@ public class BoardTest
 		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}*/
 	}
 
 }
