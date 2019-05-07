@@ -5,14 +5,12 @@ package model;
  */
 public class GameEngine
 {
-
 	private Board board;
 	private Player[] players;
 	private int playersLength;
 	private int turnCount = 0;
 	private ChessColour turn;
 	private Coord selectedPiece;
-
 	
 	public GameEngine(){
 		players = new Player[2];
@@ -78,10 +76,20 @@ public class GameEngine
 	{
 		selectedPiece = newXY;
 	}
-
-	public String endgame()
+	public String winningPlayer()
 	{
-		//if(player)
-		return null;
+		
+		if(getPlayers()[0].getScore() > getPlayers()[1].getScore()) {
+			return getPlayers()[0].getName() + " has Won!";
+		}
+		else if(getPlayers()[1].getScore() > getPlayers()[0].getScore()) {
+			return getPlayers()[1].getName() + " has Won!";
+		}
+		else if(getPlayers()[0].getScore() == getPlayers()[1].getScore()) {
+			return "Draw";
+		}
+		return "You've managed to break our game. Good job.";
 	}
+
+	
 }
