@@ -5,8 +5,12 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 import model.ChessColour;
+import model.Coord;
 import model.GameEngine;
-import model.Not2PlayersException;
+import exceptions.CoordinateOutOfBoundsException;
+import exceptions.IllegalMoveException;
+import exceptions.Not2PlayersException;
+import exceptions.PieceNullPointerException;
 import model.Player;
 
 public class GameEngineTest {
@@ -48,5 +52,26 @@ public class GameEngineTest {
 		ge.createPlayer(player3);
 	}
 	
+	@Test
+	public void testScoreCorrect() throws IllegalMoveException, PieceNullPointerException, CoordinateOutOfBoundsException {
+		GameEngine ge = new GameEngine();
+		Player player = new Player("Test", "Test", ChessColour.WHITE);
+		Player player2 = new Player("Test2", "Test2", ChessColour.BLACK);
+		ge.getBoard().movePiece(new Coord(0,5), new Coord(0,3), ChessColour.WHITE);
+		ge.getBoard().movePiece(new Coord(0,0), new Coord(0,2), ChessColour.BLACK);
+		assertEquals(ge.getBoard().movePiece(new Coord(0,3), new Coord(0,2), ChessColour.WHITE), 5);
+	}
+	
+	// Tests score when the piece taken is merged
+	@Test
+	public void testScoreCorrect2() throws IllegalMoveException, PieceNullPointerException, CoordinateOutOfBoundsException {
+		GameEngine ge = new GameEngine();
+		Player player = new Player("Test", "Test", ChessColour.WHITE);
+		Player player2 = new Player("Test2", "Test2", ChessColour.BLACK);
+		ge.getBoard().movePiece(new Coord(0,5), new Coord(0,3), ChessColour.WHITE);
+		ge.getBoard().movePiece(new Coord(1,5), new Coord(0,3), ChessColour.WHITE);
+		ge.getBoard().movePiece(new Coord(0,0), new Coord(0,2), ChessColour.BLACK);
+		assertEquals(ge.getBoard().movePiece(new Coord(0,2), new Coord(0,3), ChessColour.BLACK), 10);
+	}
 
 }
