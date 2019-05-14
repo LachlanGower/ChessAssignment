@@ -1,7 +1,6 @@
 package model;
 
 import exceptions.Not2PlayersException;
-
 /*
  * 0 = white
  * 1 = black
