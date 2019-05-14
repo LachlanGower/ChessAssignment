@@ -16,9 +16,15 @@ public class PlayerTest {
 		player.addScore(1);
 		assertEquals(player.getScore(), 1);
 	}
-
+	
+	@Test
 	public void setPlayerName() {
 		Player player = new Player("Test", "Test", ChessColour.WHITE);
 		assertEquals(player.getName(), "Test");
 	}
+	
+//	@Test
+//	public void testPlayerLogin() {
+//		
+//	}
 }
