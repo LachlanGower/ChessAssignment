@@ -78,7 +78,7 @@ public class Board
 						board[xy.getX()][xy.getY()] = null;
 						board[newXY.getX()][newXY.getY()] = piece;
 						score = 0;
-					}
+					}//ye
 					
 				} 
 				//MOVE TO EMPTY SPACE
