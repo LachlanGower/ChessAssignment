@@ -32,7 +32,6 @@ public class MovePieceHandler implements EventHandler<MouseEvent>
 					ge.getGameState().getTurnColour()));
 			ge.getGameState().nextTurn();
 			board.reDraw();
-			
 			if(ge.getGameState().getTurnsRemaining() < 0 || (ge.getWinningPlayer() != null)? ge.getWinningPlayer().getScore() == 30 : false) {
 				gui.root.getChildren().remove(0);
 				gui.root.getChildren().add(new Text(20,30,

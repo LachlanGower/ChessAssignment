@@ -57,20 +57,24 @@ public class Board
 		int score = -1;
 		if (piece != null)
 		{
-			if (piece.getMoveStrategy().isLegalMove(xy.getX() - newXY.getX(), xy.getY() - newXY.getY()))
+			if (piece.getMoveStrategy().isLegalMove(xy.getX() - newXY.getX(),
+					xy.getY() - newXY.getY(),
+					board[(xy.getX()+newXY.getX()) /2][(xy.getY()+newXY.getY()) /2]))
 			{
+				
 				if (getPiece(newXY) != null)
 				{
 					//TAKE OPPONENTS PIECE
 					if (getPiece(newXY).getColour() != colour)
 					{
+						score = board[newXY.getX()][newXY.getY()].getScore();
 						board[xy.getX()][xy.getY()] = null;
 						board[newXY.getX()][newXY.getY()] = piece;
-						score = 5;
+						
 					}
 					//MERGE PIECES
 					else {
-						piece.addType(board[newXY.getX()][newXY.getY()]);
+						piece.mergeType(board[newXY.getX()][newXY.getY()]);
 						board[xy.getX()][xy.getY()] = null;
 						board[newXY.getX()][newXY.getY()] = piece;
 						score = 0;
@@ -102,21 +106,6 @@ public class Board
 	{
 		//RECREATE THIS FUNCTION
 		String boardString = "";
-		boardString += "  0  1  2  3  4  5 ";
-		for (int y = 0; y < ROWS; y++)
-		{
-			boardString += "\n" + y;
-			for (int x = 0; x < COLS; x++)
-			{
-				if (board[x][y] == null)
-				{
-					boardString += " . ";
-				} else
-					boardString += board[x][y].toString();
-			}
-
-		}
-
 		return boardString;
 	}
 }
