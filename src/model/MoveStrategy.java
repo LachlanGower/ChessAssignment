@@ -15,12 +15,14 @@ public class MoveStrategy
 			length++;
 		}
 	}
-	public boolean isLegalMove(int dx, int dy) {
+	public boolean isLegalMove(int dx, int dy, Piece piece) {
 		boolean legal = false;
 		for(MoveStrategy strategy: strategies) {
-			//check all strategies, if a move is legal 
-			//OR gate will keep legal true for next check.
-			legal = legal || strategy.isLegalMove(dx, dy);
+			if(strategy != null) {
+				//check all strategies, if a move is legal 
+				//OR gate will keep legal true for next check.
+				legal = legal || strategy.isLegalMove(dx, dy, piece);
+			}
 		}
 		return legal;
 	}
