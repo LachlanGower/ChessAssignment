@@ -9,10 +9,11 @@ import exceptions.CoordinateOutOfBoundsException;
 import exceptions.IllegalMoveException;
 import exceptions.PieceNullPointerException;
 import model.Board;
-import model.Piece;
+import model.ChessColour;
+import model.Coord;
 
-public class BoardTest
-{
+public class BoardTest {
+	
 	Board board;
 	
 	@Before
@@ -20,22 +21,125 @@ public class BoardTest
 	{
 		board = new Board();
 	}
-
-	@Test
-	public void RookMovesTest()
+	
+	@Test(expected=PieceNullPointerException.class)
+	public void selectPieceTest() throws IllegalMoveException, PieceNullPointerException, CoordinateOutOfBoundsException
 	{
-		//
-		/*
-		try
-		{
-			Piece piece = board.getPiece(0, 0);
-			board.movePiece(0,0,0,1,1);
-			assert(board.getPiece(0, 1) == piece);
-		} catch (CoordinateOutOfBoundsException | PieceNullPointerException | IllegalMoveException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}*/
+		Coord currentPos = new Coord(2,2);
+		Coord newPos = new Coord(0,4);
+		board.movePiece(currentPos, newPos, ChessColour.WHITE);
+	}
+	
+	@Test(expected=CoordinateOutOfBoundsException.class)
+	public void cantMovePieceOffBoardTest() throws IllegalMoveException, PieceNullPointerException, CoordinateOutOfBoundsException
+	{
+		Coord currentPos = new Coord(0,0);
+		Coord newPos = new Coord(0,7);
+		board.movePiece(currentPos, newPos, ChessColour.WHITE);
 	}
 
+	// Ensures rook can't move diagonally
+	@Test(expected=IllegalMoveException.class)
+	public void rookMoveTest1() throws IllegalMoveException, PieceNullPointerException, CoordinateOutOfBoundsException
+	{
+		Coord currentPos = new Coord(0,0);
+		Coord newPos = new Coord(2,2);
+		board.movePiece(currentPos, newPos, ChessColour.WHITE);
+	}
+	
+	// Ensures rook can move legally vertically
+	@Test
+	public void rookMoveTest2() throws IllegalMoveException, PieceNullPointerException, CoordinateOutOfBoundsException
+	{
+		Coord currentPos = new Coord(0,0);
+		Coord newPos = new Coord(0,2);
+		board.movePiece(currentPos, newPos, ChessColour.WHITE);
+	}
+	
+	// Ensures rook can't jump test
+	@Test(expected=IllegalMoveException.class)
+	public void rookMoveTest3() throws IllegalMoveException, PieceNullPointerException, CoordinateOutOfBoundsException
+	{
+		Coord currentPos = new Coord(0,0);
+		Coord newPos = new Coord(0,2);
+		board.movePiece(currentPos, newPos, ChessColour.WHITE);
+		currentPos = new Coord(0,2);
+		newPos = new Coord(0,4);
+		board.movePiece(currentPos, newPos, ChessColour.WHITE);
+		currentPos = new Coord(0,5);
+		newPos = new Coord(0,3);
+		board.movePiece(currentPos, newPos, ChessColour.BLACK);
+	}
+	
+	// Ensures bishop can move diagonally
+	@Test
+	public void bishopMoveTest1() throws IllegalMoveException, PieceNullPointerException, CoordinateOutOfBoundsException
+	{
+		Coord currentPos = new Coord(3,0);
+		Coord newPos = new Coord(5,2);
+		board.movePiece(currentPos, newPos, ChessColour.WHITE);
+	}
+	
+	// Ensures bishop can't move vertically
+	@Test(expected=IllegalMoveException.class)
+	public void bishopMoveTest2() throws IllegalMoveException, PieceNullPointerException, CoordinateOutOfBoundsException
+	{
+		Coord currentPos = new Coord(3,0);
+		Coord newPos = new Coord(3,2);
+		board.movePiece(currentPos, newPos, ChessColour.WHITE);
+	}
+	
+	// Ensures bishop can't jump test
+	@Test(expected=IllegalMoveException.class)
+	public void bishopMoveTest3() throws IllegalMoveException, PieceNullPointerException, CoordinateOutOfBoundsException
+	{
+		Coord currentPos = new Coord(0,0);
+		Coord newPos = new Coord(0,2);
+		board.movePiece(currentPos, newPos, ChessColour.WHITE);
+		currentPos = new Coord(0,2);
+		newPos = new Coord(0,4);
+		board.movePiece(currentPos, newPos, ChessColour.WHITE);
+		currentPos = new Coord(0,4);
+		newPos = new Coord(1,4);
+		board.movePiece(currentPos, newPos, ChessColour.WHITE);
+		currentPos = new Coord(2,5);
+		newPos = new Coord(0,3);
+		board.movePiece(currentPos, newPos, ChessColour.BLACK);
+	}
+	
+	// Ensures knight can move in an L shape
+	@Test
+	public void knightMoveTest1() throws IllegalMoveException, PieceNullPointerException, CoordinateOutOfBoundsException
+	{
+		Coord currentPos = new Coord(1,0);
+		Coord newPos = new Coord(2,2);
+		board.movePiece(currentPos, newPos, ChessColour.WHITE);
+	}
+	
+	// Ensures knight can't move horizontally
+	@Test(expected=IllegalMoveException.class)
+	public void knightMoveTest2() throws IllegalMoveException, PieceNullPointerException, CoordinateOutOfBoundsException
+	{
+		Coord currentPos = new Coord(1,0);
+		Coord newPos = new Coord(1,2);
+		board.movePiece(currentPos, newPos, ChessColour.WHITE);
+	}
+	
+	// Ensures knight can jump over pieces
+	@Test
+	public void knightMoveTest3() throws IllegalMoveException, PieceNullPointerException, CoordinateOutOfBoundsException
+	{
+		Coord currentPos = new Coord(0,0);
+		Coord newPos = new Coord(0,2);
+		board.movePiece(currentPos, newPos, ChessColour.WHITE);
+		currentPos = new Coord(0,2);
+		newPos = new Coord(0,4);
+		board.movePiece(currentPos, newPos, ChessColour.WHITE);
+		currentPos = new Coord(0,4);
+		newPos = new Coord(1,4);
+		board.movePiece(currentPos, newPos, ChessColour.WHITE);
+		currentPos = new Coord(1,5);
+		newPos = new Coord(2,3);
+		board.movePiece(currentPos, newPos, ChessColour.BLACK);
+	}
 }
