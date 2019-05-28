@@ -1,9 +1,9 @@
 package controller;
 
+import exceptions.CoordinateOutOfBoundsException;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import model.Coord;
-import model.CoordinateOutOfBoundsException;
 import model.GameEngine;
 
 public class SelectPieceHandler implements EventHandler<MouseEvent>
@@ -17,7 +17,7 @@ public class SelectPieceHandler implements EventHandler<MouseEvent>
 	{
 		try
 		{
-			ge.setSelectedPiece(ge.getBoard().selectPiece(new Coord(e.getSource().toString()), ge.getTurnColour()));
+			ge.getGameState().setSelectedPiece(ge.getBoard().selectPiece(new Coord(e.getSource().toString()), ge.getGameState().getTurnColour()));
 		} catch (NumberFormatException nfe)
 		{
 		} catch (CoordinateOutOfBoundsException coobe)

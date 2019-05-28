@@ -1,12 +1,14 @@
 package controller;
 
+import exceptions.CoordinateOutOfBoundsException;
+import exceptions.IllegalMoveException;
+import exceptions.PieceNullPointerException;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import model.Coord;
-import model.CoordinateOutOfBoundsException;
-import model.IllegalMoveException;
-import model.PieceNullPointerException;
+import model.GameEngine;
+import model.GameState;
 import view.BoardGUI;
 import view.GraphicsEngine;
 
@@ -23,15 +25,17 @@ public class MovePieceHandler implements EventHandler<MouseEvent>
 	{
 		try
 		{
-			gui.getGameEngine().getPlayers()[gui.getGameEngine().getTurnColour().ordinal()].addScore( 
-					gui.getGameEngine().getBoard().movePiece(gui.getGameEngine().getSelectedPiece(),
+			GameEngine ge = gui.getGameEngine();
+			gui.getGameEngine().getCurrentPlayer().addScore( 
+					gui.getGameEngine().getBoard().movePiece(ge.getGameState().getSelectedPiece(),
 					new Coord(e.getSource().toString()),
-					gui.getGameEngine().getTurnColour()));
-			
+					ge.getGameState().getTurnColour()));
+			ge.getGameState().nextTurn();
 			board.reDraw();
-			if(gui.getGameEngine().getTurnsRemaining() < 0) {
+			if(ge.getGameState().getTurnsRemaining() < 0 || (ge.getWinningPlayer() != null)? ge.getWinningPlayer().getScore() == 30 : false) {
 				gui.root.getChildren().remove(0);
-				
+				gui.root.getChildren().add(new Text(20,30,
+						(gui.getGameEngine().getWinningPlayer() != null)? gui.getGameEngine().getWinningPlayer().getName() + " Has Won!": "Itsa Draw :("));
 			}
 		} catch (NumberFormatException | IllegalMoveException | PieceNullPointerException
 				| CoordinateOutOfBoundsException e1)
