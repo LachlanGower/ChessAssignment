@@ -35,8 +35,16 @@ public class Piece
 		}
 		return ms;
 	}
-	
-	public boolean addType(Piece piece) {
+	public int getScore() {
+		int count = 0;
+		for(PieceType type : getTypes()) {
+			if(type != null) {
+				count++;
+			}
+		}
+		return 5 * count;
+	}
+	public boolean mergeType(Piece piece) {
 		if(piece.getTypes()[1] == null && getTypes()[1] == null) {
 			if(getTypes()[0] == piece.getTypes()[0]) {
 				return false;
@@ -47,6 +55,20 @@ public class Piece
 		}
 		else
 			return false;
+	}
+	
+	public boolean splitType(PieceType newType) {
+		if(getTypes()[0] == newType) {
+			getTypes()[0] = null;
+			return true;
+		}
+		else if(getTypes()[1] == newType) {
+			getTypes()[1] = null;
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 	
 	public String toString() {
