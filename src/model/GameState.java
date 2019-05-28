@@ -31,6 +31,7 @@ public class GameState
 		selectedPiece = newXY;
 	}
 	public void nextTurn() {
+		selectedPiece = null;
 		if(turn == ChessColour.BLACK){
 			turn = ChessColour.WHITE;
 		}

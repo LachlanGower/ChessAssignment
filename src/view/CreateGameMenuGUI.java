@@ -1,7 +1,7 @@
 package view;
 
 import controller.CreateGameHandler;
-import controller.CreatePlayerHandler;
+import controller.RegisterPlayerHandler;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
@@ -33,7 +33,7 @@ public class CreateGameMenuGUI extends Group
 	    pass.setLayoutY(80); 
 		
 	    Button createPlayer = new Button("Add Player");
-	    createPlayer.addEventFilter(MouseEvent.MOUSE_CLICKED, new CreatePlayerHandler(gui,this,user, pass));
+	    createPlayer.addEventFilter(MouseEvent.MOUSE_CLICKED, new RegisterPlayerHandler(gui,this,user, pass));
 		createPlayer.setLayoutX(180); 
 	    createPlayer.setLayoutY(130); 
 	    

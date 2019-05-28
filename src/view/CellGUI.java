@@ -1,7 +1,5 @@
 package view;
 
-import controller.MovePieceHandler;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
@@ -12,7 +10,6 @@ public class CellGUI extends Rectangle
 	public CellGUI(GraphicsEngine gui, BoardGUI board, int colour, int x, int y) {
 		this.x = x;
 		this.y = y;
-		this.addEventFilter(MouseEvent.MOUSE_CLICKED, new MovePieceHandler(gui, board));
 		int length = 60;
 		this.setWidth(length);
 		this.setHeight(length);
