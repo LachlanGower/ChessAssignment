@@ -1,10 +1,7 @@
 package model;
 
 import exceptions.Not2PlayersException;
-/*
- * 0 = white
- * 1 = black
- */
+
 public class GameEngine
 {
 	private Board board;
@@ -31,18 +28,21 @@ public class GameEngine
 	public int getAmountOfPlayers() {
 		return playersLength;
 	}
-	public void createPlayer(Player newPlayer) throws Exception {
+	public void registerPlayer(String name, String pass) throws Exception {
 		if(playersLength > 1) 
 			throw new Exception();
 		for(Player player : players) {
 			if(player != null) {
-				if(player.getName().equals(newPlayer.getName())) {
+				if(player.getName().equals(name)) {
 					throw new Exception();
 				}
 			}
 		}
-		players[playersLength] = newPlayer; 
+		players[playersLength] = new Player(name, pass, ChessColour.values()[playersLength]); 
 		playersLength++;
+	}
+	public void loginPlayer(String name, String pass) {
+		
 	}
 	public Player getCurrentPlayer()
 	{

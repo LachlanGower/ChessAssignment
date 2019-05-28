@@ -25,11 +25,10 @@ public class CreateGameHandler implements EventHandler<MouseEvent>
 			int turnCount2 = players[1].getTurnCount();
 			gui.getGameEngine().createGame((int) ((turnCount1 + turnCount2) /2));
 			gui.root.getChildren().remove(0);
-			System.out.print("test");
 			gui.root.getChildren().add(new BoardGUI(gui));
 		}catch (Not2PlayersException e)
 		{
-			//gameengine doesnt have own two players
+			//gameengine doesnt have two players
 			System.err.println("Only 2 Players may be added to the game");
 		}catch(NumberFormatException e)
 		{

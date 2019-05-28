@@ -5,12 +5,15 @@ import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import model.Coord;
 import model.GameEngine;
+import view.BoardGUI;
 
 public class SelectPieceHandler implements EventHandler<MouseEvent>
 {
 	GameEngine ge;
-	public SelectPieceHandler(GameEngine ge) {
+	BoardGUI board;
+	public SelectPieceHandler(GameEngine ge, BoardGUI board) {
 		this.ge = ge;
+		this.board = board;
 	}
 	@Override
 	public void handle(MouseEvent e)
@@ -18,6 +21,7 @@ public class SelectPieceHandler implements EventHandler<MouseEvent>
 		try
 		{
 			ge.getGameState().setSelectedPiece(ge.getBoard().selectPiece(new Coord(e.getSource().toString()), ge.getGameState().getTurnColour()));
+			board.reDraw();
 		} catch (NumberFormatException nfe)
 		{
 		} catch (CoordinateOutOfBoundsException coobe)
