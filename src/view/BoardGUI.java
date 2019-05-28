@@ -1,10 +1,13 @@
 package view;
 
+import controller.DeselectPieceHandler;
+import controller.SplitPieceHandler;
 import exceptions.CoordinateOutOfBoundsException;
 import exceptions.IllegalMoveException;
 import exceptions.PieceNullPointerException;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import model.Coord;
@@ -19,6 +22,10 @@ public class BoardGUI extends Group
 	SelectCollision[] selectCells = new SelectCollision[12];
 	MoveCollision[] moveCells = new MoveCollision[20];
 	GraphicsEngine gui;
+	Button deselect;
+	Button split;
+	boolean splitEnabled = false;
+	
 	public BoardGUI(GraphicsEngine gui) {
 		this.gui = gui;
 		for(int y = 0; y < 6;y++) {
@@ -68,16 +75,19 @@ public class BoardGUI extends Group
 		turns.setY(480);
 		turns.setFont(font);
 		
-		Button split = new Button("Split");
+		split = new Button("Split");
 		split.setLayoutX(270);
 		split.setLayoutY(410);
 		getChildren().add(split);
 		split.setDisable(true);
-		Button deselect = new Button("Deselect");
+		split.addEventFilter(MouseEvent.MOUSE_CLICKED, new SplitPieceHandler(gui, this));
+
+		deselect = new Button("Deselect");
 		deselect.setLayoutX(320);
 		deselect.setLayoutY(410);
 		getChildren().add(deselect);
 		deselect.setDisable(true);
+		deselect.addEventFilter(MouseEvent.MOUSE_CLICKED, new DeselectPieceHandler(gui.getGameEngine(), this));
 
 
 		getChildren().add(turns);
@@ -159,6 +169,26 @@ public class BoardGUI extends Group
 				}
 			}
 		}
+		
+	}
+	public void setDeselect(boolean b)
+	{
+		deselect.setDisable(b);
+	}
+	public void setSplit(boolean b)
+	{
+		if(b || gui.getGameEngine().getBoard().getPiece(gui.getGameEngine().getGameState().getSelectedPiece()).getMergeType() !=null) {
+			split.setDisable(b);
+		}
+		
+	}
+	public boolean getSplit()
+	{		
+		return splitEnabled;
+	}
+	public void setSplitEnabled(boolean b)
+	{
+		splitEnabled = b;
 		
 	}
 }

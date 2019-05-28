@@ -1,23 +1,26 @@
 package controller;
 
 import javafx.event.EventHandler;
-import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
-import model.GameEngine;
+import view.BoardGUI;
+import view.GraphicsEngine;
 
 public class SplitPieceHandler implements EventHandler<MouseEvent>
 {
-	GameEngine ge;
-	Button button;
-	public SplitPieceHandler(GameEngine ge,Button button) {
-		this.ge = ge;
-		this.button = button;
+	GraphicsEngine gui;
+	BoardGUI board;
+	public SplitPieceHandler(GraphicsEngine gui,BoardGUI board) {
+		this.gui = gui;
+		this.board = board;
 	}
 	
 	@Override
 	public void handle(MouseEvent event)
 	{
-		ge.getBoard().getPiece(null);
+		System.out.println("doing");
+		board.setSplitEnabled(true);
+		board.setDeselect(true);
+		board.setSplit(true);
 	}
 
 

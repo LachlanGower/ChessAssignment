@@ -26,14 +26,27 @@ public class MovePieceHandler implements EventHandler<MouseEvent>
 		try
 		{
 			GameEngine ge = gui.getGameEngine();
-			gui.getGameEngine().getCurrentPlayer().addScore( 
+			if(board.getSplit() == false) {
+				gui.getGameEngine().getCurrentPlayer().addScore( 
 					gui.getGameEngine().getBoard().movePiece(ge.getGameState().getSelectedPiece(),
 					new Coord(e.getSource().toString()),
 					ge.getCurrentPlayer().getColour()));
+			}
+			else {
+				gui.getGameEngine().getCurrentPlayer().addScore( 
+						gui.getGameEngine().getBoard().splitPiece(ge.getGameState().getSelectedPiece(),
+						new Coord(e.getSource().toString()),
+						ge.getCurrentPlayer().getColour()));
+				board.setSplitEnabled(false);
+			}
 			ge.getGameState().nextTurn();
 			board.reDraw();
-			if(ge.getGameState().getTurnsRemaining() < 0 || (ge.getWinningPlayer() != null)? ge.getWinningPlayer().getScore() == 30 : false) {
-				gui.root.getChildren().remove(0);
+			board.setDeselect(true);
+			board.setSplit(true);
+			System.out.println(ge.getGameState().getTurnsRemaining() < 0);
+			System.out.println((ge.getWinningPlayer() != null) ? ge.getWinningPlayer().getScore() == 30 : false);
+			if(ge.getGameState().getTurnsRemaining() < 0 || ((ge.getWinningPlayer() != null) ? ge.getWinningPlayer().getScore() == 30 : false)) {
+				gui.root.getChildren().remove(board);
 				gui.root.getChildren().add(new Text(20,30,
 						(gui.getGameEngine().getWinningPlayer() != null)? gui.getGameEngine().getWinningPlayer().getName() + " Has Won!": "Itsa Draw :("));
 			}

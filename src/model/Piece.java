@@ -52,9 +52,11 @@ public class Piece
 		return false;
 	}
 	
-	/*public boolean splitType(PieceType newType) {
-		
-	}*/
+	public Piece splitType(PieceType splitType)
+	{
+		mergedType = null;
+		return new Piece(colour, splitType);
+	}
 	
 	public String toString() {
 		String toString = "";
@@ -87,6 +89,8 @@ public class Piece
 		}
 		return toString;
 	}
+
+
 }
 
 //

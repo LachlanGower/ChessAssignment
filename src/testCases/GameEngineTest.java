@@ -21,13 +21,13 @@ public class GameEngineTest {
 		Player player = new Player("Test", "Test", ChessColour.BLACK);
 		Player player2 = new Player("Test2", "Test2", ChessColour.WHITE);
 		try {
-			ge.createPlayer(player);
+		//	ge.createPlayer(player);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			System.out.println(e + " error creating player.");
 		}
 		try {
-			ge.createPlayer(player2);
+		//	ge.createPlayer(player2);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			System.out.println(e + " error creating player.");
@@ -47,9 +47,9 @@ public class GameEngineTest {
 		Player player = new Player("Test", "Test", ChessColour.BLACK);
 		Player player2 = new Player("Test2", "Test2", ChessColour.WHITE);
 		Player player3 = new Player("Test3", "Test3", ChessColour.WHITE);
-		ge.createPlayer(player);
-		ge.createPlayer(player2);
-		ge.createPlayer(player3);
+		//ge.createPlayer(player);
+		//ge.createPlayer(player2);
+		//ge.createPlayer(player3);
 	}
 	
 	@Test

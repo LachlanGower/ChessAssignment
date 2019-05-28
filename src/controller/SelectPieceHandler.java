@@ -21,6 +21,8 @@ public class SelectPieceHandler implements EventHandler<MouseEvent>
 		try
 		{
 			ge.getGameState().setSelectedPiece(ge.getBoard().selectPiece(new Coord(e.getSource().toString()), ge.getGameState().getTurnColour()));
+			board.setDeselect(false);
+			board.setSplit(false);
 			board.reDraw();
 		} catch (NumberFormatException nfe)
 		{

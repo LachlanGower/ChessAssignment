@@ -1,24 +1,26 @@
 package controller;
 
 import javafx.event.EventHandler;
-import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import model.GameEngine;
+import view.BoardGUI;
 
 public class DeselectPieceHandler implements EventHandler<MouseEvent>
 {
 	GameEngine ge;
-	Button button;
-	public DeselectPieceHandler(GameEngine ge,Button button) {
+	BoardGUI board;
+	public DeselectPieceHandler(GameEngine ge,BoardGUI board) {
 		this.ge = ge;
-		this.button = button;
+		this.board = board;
 	}
 	
 	@Override
 	public void handle(MouseEvent event)
 	{
 		ge.getGameState().setSelectedPiece(null);
-		button.setDisable(false);
+		board.reDraw();
+		board.setDeselect(true);
+		board.setSplit(true);
 	}
 
 }
