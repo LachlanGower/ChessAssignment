@@ -15,7 +15,7 @@ import model.Coord;
 public class BoardTest {
 	
 	Board board;
-	
+	// Setup for rest of the test cases.
 	@Before
 	public void setUp() throws Exception
 	{
@@ -23,6 +23,7 @@ public class BoardTest {
 	}
 	
 	@Test(expected=PieceNullPointerException.class)
+	// Tests for selecting piece.
 	public void selectPieceTest() throws IllegalMoveException, PieceNullPointerException, CoordinateOutOfBoundsException
 	{
 		Coord currentPos = new Coord(2,2);
@@ -31,6 +32,7 @@ public class BoardTest {
 	}
 	
 	@Test(expected=CoordinateOutOfBoundsException.class)
+	// Test for if the coordinate is outside the limits of the board, catches the exception.
 	public void cantMovePieceOffBoardTest() throws IllegalMoveException, PieceNullPointerException, CoordinateOutOfBoundsException
 	{
 		Coord currentPos = new Coord(0,0);
