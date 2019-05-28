@@ -57,9 +57,7 @@ public class Board
 		int score = -1;
 		if (piece != null)
 		{
-			if (piece.getMoveStrategy().isLegalMove(xy.getX() - newXY.getX(),
-					xy.getY() - newXY.getY(),
-					board[(xy.getX()+newXY.getX()) /2][(xy.getY()+newXY.getY()) /2]))
+			if (validateMove(xy, newXY.getX(),newXY.getY()))
 			{
 				
 				if (getPiece(newXY) != null)
@@ -74,11 +72,15 @@ public class Board
 					}
 					//MERGE PIECES
 					else {
-						piece.mergeType(board[newXY.getX()][newXY.getY()]);
-						board[xy.getX()][xy.getY()] = null;
-						board[newXY.getX()][newXY.getY()] = piece;
-						score = 0;
-					}//ye
+						if(piece.mergeType(board[newXY.getX()][newXY.getY()])){
+							board[xy.getX()][xy.getY()] = null;
+							board[newXY.getX()][newXY.getY()] = piece;
+							score = 0;
+						}
+						else {
+							throw new IllegalMoveException("Cannot Move Here Please Try Again\n");
+						}
+					}
 					
 				} 
 				//MOVE TO EMPTY SPACE
@@ -100,6 +102,15 @@ public class Board
 		return score;
 	}
 
+	public boolean validateMove(Coord select, int x, int y) throws IllegalMoveException, PieceNullPointerException
+	{
+		if(board[select.getX()][select.getY()] != null) {
+			if(board[select.getX()][select.getY()].getMoveStrategy().isLegalMove(select.getX() - x, select.getY() - y, board[(select.getX()+x) /2][(select.getY()+y) /2])) {
+				return true;
+			}
+		}
+		return false;
+	}
 	
 	//CONSOLE GUI FUNCTION
 	public String toString()

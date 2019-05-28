@@ -1,7 +1,10 @@
 package view;
 
 import exceptions.CoordinateOutOfBoundsException;
+import exceptions.IllegalMoveException;
+import exceptions.PieceNullPointerException;
 import javafx.scene.Group;
+import javafx.scene.control.Button;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import model.Coord;
@@ -13,6 +16,8 @@ public class BoardGUI extends Group
 	Text player2Score;
 	Text turns;
 	PieceGUI[] pieces = new PieceGUI[12];
+	SelectCollision[] selectCells = new SelectCollision[12];
+	MoveCollision[] moveCells = new MoveCollision[20];
 	GraphicsEngine gui;
 	public BoardGUI(GraphicsEngine gui) {
 		this.gui = gui;
@@ -62,9 +67,22 @@ public class BoardGUI extends Group
 		turns.setX(20);
 		turns.setY(480);
 		turns.setFont(font);
+		
+		Button split = new Button("Split");
+		split.setLayoutX(270);
+		split.setLayoutY(410);
+		getChildren().add(split);
+		split.setDisable(true);
+		Button deselect = new Button("Deselect");
+		deselect.setLayoutX(320);
+		deselect.setLayoutY(410);
+		getChildren().add(deselect);
+		deselect.setDisable(true);
+
 
 		getChildren().add(turns);
 		int length = 0;
+		int selectLength = 0;
 		for(int y = 0 ;y < 6 ;y++) {
 			for(int x = 0 ;x < 6 ;x++) {
 				try
@@ -74,7 +92,13 @@ public class BoardGUI extends Group
 						getChildren().add(pieces[length]);
 						length++;
 					}
-				} catch (CoordinateOutOfBoundsException e)
+					if(gui.getGameEngine().getBoard().getPiece(new Coord(x,y)) != null && gui.getGameEngine().getBoard().getPiece(new Coord(x,y)).getColour() == gui.getGameEngine().getCurrentPlayer().getColour()) {
+						selectCells[selectLength] = new SelectCollision(gui,this, x, y);
+						getChildren().add(selectCells[selectLength]);
+						selectLength++;
+					}
+
+				} catch (CoordinateOutOfBoundsException | IllegalMoveException | PieceNullPointerException e)
 				{
 					e.printStackTrace();
 				}
@@ -89,7 +113,15 @@ public class BoardGUI extends Group
 		for(PieceGUI piece : pieces) {
 			getChildren().remove(piece);
 		}
+		for(MoveCollision move : moveCells) {
+			getChildren().remove(move);
+		}
+		for(SelectCollision select : selectCells) {
+			getChildren().remove(select);
+		}
 		int length = 0;
+		int moveLength = 0;
+		int selectLength = 0;
 		for(int x = 0; x < 6;x++) {
 			for(int y = 0; y < 6;y++) {
 				try
@@ -99,11 +131,34 @@ public class BoardGUI extends Group
 						getChildren().add(pieces[length]);
 						length++;
 					}
+					Coord select = gui.getGameEngine().getGameState().getSelectedPiece();
+					if(select != null) {
+						if(gui.getGameEngine().getBoard().validateMove(select,x,y)){
+							moveCells[moveLength] = new MoveCollision(gui,this, x, y);
+							getChildren().add(moveCells[moveLength]);
+							moveLength++;
+						}
+					}
+					else {
+						if(gui.getGameEngine().getBoard().getPiece(new Coord(x,y)) != null && gui.getGameEngine().getBoard().getPiece(new Coord(x,y)).getColour() == gui.getGameEngine().getCurrentPlayer().getColour()) {
+							selectCells[selectLength] = new SelectCollision(gui,this, x, y);
+							getChildren().add(selectCells[selectLength]);
+							selectLength++;
+						}
+					}
+
 				} catch (CoordinateOutOfBoundsException e)
+				{
+					e.printStackTrace();
+				} catch (IllegalMoveException e)
+				{
+					e.printStackTrace();
+				} catch (PieceNullPointerException e)
 				{
 					e.printStackTrace();
 				}
 			}
 		}
+		
 	}
 }
