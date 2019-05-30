@@ -14,20 +14,20 @@ import exceptions.PieceNullPointerException;
 import model.Player;
 
 public class GameEngineTest {
-
+	// Try to create player 1 and player 2, if unsuccesful catches the exception.
 	@Test
 	public void testAmountPlayers() {
 		GameEngine ge = new GameEngine();
 		Player player = new Player("Test", "Test", ChessColour.BLACK);
 		Player player2 = new Player("Test2", "Test2", ChessColour.WHITE);
 		try {
-		//	ge.createPlayer(player);
+			ge.createPlayer(player);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			System.out.println(e + " error creating player.");
 		}
 		try {
-		//	ge.createPlayer(player2);
+			ge.createPlayer(player2);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			System.out.println(e + " error creating player.");
@@ -36,23 +36,27 @@ public class GameEngineTest {
 	}
 	
 	@Test(expected = Not2PlayersException.class)
+	// Makes sure there can't be more than two players, in this case will throw exception as
+	// there are '10' players.
 	public void testCorrectPlayerNumber() throws Exception{
 		GameEngine ge = new GameEngine();
 		ge.createGame(10);
 	}
 	
 	@Test(expected = Exception.class)
+	// If there are too many players, catch the exception.
 	public void testTooManyPlayers() throws Exception {
 		GameEngine ge = new GameEngine();
 		Player player = new Player("Test", "Test", ChessColour.BLACK);
 		Player player2 = new Player("Test2", "Test2", ChessColour.WHITE);
 		Player player3 = new Player("Test3", "Test3", ChessColour.WHITE);
-		//ge.createPlayer(player);
-		//ge.createPlayer(player2);
-		//ge.createPlayer(player3);
+		ge.createPlayer(player);
+		ge.createPlayer(player2);
+		ge.createPlayer(player3);
 	}
 	
 	@Test
+	// Tests whether score is added for taking a normal piece, if not throws exception.
 	public void testScoreCorrect() throws IllegalMoveException, PieceNullPointerException, CoordinateOutOfBoundsException {
 		GameEngine ge = new GameEngine();
 		Player player = new Player("Test", "Test", ChessColour.WHITE);
@@ -62,7 +66,7 @@ public class GameEngineTest {
 		assertEquals(ge.getBoard().movePiece(new Coord(0,3), new Coord(0,2), ChessColour.WHITE), 5);
 	}
 	
-	// Tests score when the piece taken is merged
+	// Tests whether score is added for taking a merged piece, if not throws exception.
 	@Test
 	public void testScoreCorrect2() throws IllegalMoveException, PieceNullPointerException, CoordinateOutOfBoundsException {
 		GameEngine ge = new GameEngine();

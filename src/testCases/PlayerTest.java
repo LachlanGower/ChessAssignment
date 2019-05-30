@@ -8,7 +8,7 @@ import model.Player;
 import model.ChessColour;
 
 public class PlayerTest {
-
+	// Checks if player has score added.
 	@Test
 	public void testAddScore() {
 		Player player = new Player("Test", "Test", ChessColour.WHITE);
@@ -16,7 +16,7 @@ public class PlayerTest {
 		player.addScore(1);
 		assertEquals(player.getScore(), 1);
 	}
-	
+	// Checks if player name is correct.
 	@Test
 	public void setPlayerName() {
 		Player player = new Player("Test", "Test", ChessColour.WHITE);
