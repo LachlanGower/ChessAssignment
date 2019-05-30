@@ -18,16 +18,14 @@ public class GameEngineTest {
 	@Test
 	public void testAmountPlayers() {
 		GameEngine ge = new GameEngine();
-		Player player = new Player("Test", "Test", ChessColour.BLACK);
-		Player player2 = new Player("Test2", "Test2", ChessColour.WHITE);
 		try {
-			ge.createPlayer(player);
+			ge.registerPlayer("Test","Test");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			System.out.println(e + " error creating player.");
 		}
 		try {
-			ge.createPlayer(player2);
+			ge.registerPlayer("Test2","Test2");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			System.out.println(e + " error creating player.");
@@ -47,20 +45,15 @@ public class GameEngineTest {
 	// If there are too many players, catch the exception.
 	public void testTooManyPlayers() throws Exception {
 		GameEngine ge = new GameEngine();
-		Player player = new Player("Test", "Test", ChessColour.BLACK);
-		Player player2 = new Player("Test2", "Test2", ChessColour.WHITE);
-		Player player3 = new Player("Test3", "Test3", ChessColour.WHITE);
-		ge.createPlayer(player);
-		ge.createPlayer(player2);
-		ge.createPlayer(player3);
+		ge.registerPlayer("Test","Test");
+		ge.registerPlayer("Test2", "Test2");
+		ge.registerPlayer("Test3", "Test3");
 	}
 	
 	@Test
 	// Tests whether score is added for taking a normal piece, if not throws exception.
 	public void testScoreCorrect() throws IllegalMoveException, PieceNullPointerException, CoordinateOutOfBoundsException {
 		GameEngine ge = new GameEngine();
-		Player player = new Player("Test", "Test", ChessColour.WHITE);
-		Player player2 = new Player("Test2", "Test2", ChessColour.BLACK);
 		ge.getBoard().movePiece(new Coord(0,5), new Coord(0,3), ChessColour.WHITE);
 		ge.getBoard().movePiece(new Coord(0,0), new Coord(0,2), ChessColour.BLACK);
 		assertEquals(ge.getBoard().movePiece(new Coord(0,3), new Coord(0,2), ChessColour.WHITE), 5);
@@ -70,8 +63,6 @@ public class GameEngineTest {
 	@Test
 	public void testScoreCorrect2() throws IllegalMoveException, PieceNullPointerException, CoordinateOutOfBoundsException {
 		GameEngine ge = new GameEngine();
-		Player player = new Player("Test", "Test", ChessColour.WHITE);
-		Player player2 = new Player("Test2", "Test2", ChessColour.BLACK);
 		ge.getBoard().movePiece(new Coord(0,5), new Coord(0,3), ChessColour.WHITE);
 		ge.getBoard().movePiece(new Coord(1,5), new Coord(0,3), ChessColour.WHITE);
 		ge.getBoard().movePiece(new Coord(0,0), new Coord(0,2), ChessColour.BLACK);
