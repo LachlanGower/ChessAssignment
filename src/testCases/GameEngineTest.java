@@ -11,7 +11,6 @@ import exceptions.CoordinateOutOfBoundsException;
 import exceptions.IllegalMoveException;
 import exceptions.Not2PlayersException;
 import exceptions.PieceNullPointerException;
-import model.Player;
 
 public class GameEngineTest {
 	// Try to create player 1 and player 2, if unsuccesful catches the exception.

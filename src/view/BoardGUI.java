@@ -1,7 +1,5 @@
 package view;
 
-import com.sun.prism.paint.Color;
-
 import controller.DeselectPieceHandler;
 import controller.SplitPieceHandler;
 import exceptions.CoordinateOutOfBoundsException;

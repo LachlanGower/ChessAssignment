@@ -119,6 +119,9 @@ public class GameEngine
 				if(i == 0) {
 					if(playersLength == 2) {
 						players[i] = players[i+1];
+						if(players[i] != null) {
+							players[i].setColour(ChessColour.WHITE);
+						}
 						players[i+1] = null;
 						playersLength--;
 						i = playersLength;

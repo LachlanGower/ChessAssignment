@@ -50,4 +50,9 @@ public class Player {
 		return name + password;
 	}
 
+	public void setColour(ChessColour c)
+	{
+		colour = c;
+	}
+
 }
