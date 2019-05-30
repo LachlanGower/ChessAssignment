@@ -1,5 +1,11 @@
 package model;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.util.ArrayList;
+import java.util.Scanner;
+
 import exceptions.Not2PlayersException;
 
 public class GameEngine
@@ -30,20 +36,53 @@ public class GameEngine
 	}
 	public void registerPlayer(String name, String pass) throws Exception {
 		if(playersLength > 1) 
-			throw new Exception();
-		for(Player player : players) {
-			if(player != null) {
-				if(player.getName().equals(name)) {
-					throw new Exception();
+			throw new Exception("Maximum amount of players added");
+		ArrayList<Player> registeredPlayers = checkLogin();
+		boolean newPlayer = true;
+
+		for(Player player : registeredPlayers) {
+			if(player.getName().equals(name)) {
+				newPlayer = false;
+				if(player.getPassword().equals(pass)) {
+					players[playersLength] = new Player(name, pass, ChessColour.values()[playersLength]);
+					playersLength++;
+				}
+				else {
+					throw new Exception("User Exists but Password is Wrong");
 				}
 			}
 		}
-		players[playersLength] = new Player(name, pass, ChessColour.values()[playersLength]); 
-		playersLength++;
+		if(newPlayer) {
+			FileWriter pw = new FileWriter(new File("userSheet.txt"), true);
+			players[playersLength] = new Player(name, pass, ChessColour.values()[playersLength]);
+			pw.write(players[playersLength].getName() + "," + players[playersLength].getPassword() + '\n' );
+			pw.close();
+			playersLength++;
+		}
 	}
-	public void loginPlayer(String name, String pass) {
+	private ArrayList<Player> checkLogin()
+	{
+		ArrayList<Player> players = new ArrayList<Player>();
+		try
+		{
+			File file = new File("userSheet.txt");
+			Scanner scan = new Scanner(file);
+			while(scan.hasNextLine()) {
+				String line = scan.nextLine();
+				String user =line.split(",")[0];
+				String pass = line.split(",")[1];
+				players.add(new Player(user, pass, null));
+			}
+			
+			scan.close();
+		} catch (FileNotFoundException e)
+		{
+			e.printStackTrace();
+		}
 		
+		return players;
 	}
+
 	public Player getCurrentPlayer()
 	{
 		return players[gs.getTurnColour().ordinal()];
@@ -67,5 +106,31 @@ public class GameEngine
 	{
 		return gs;
 	}
-	
+
+	public void removePlayer(String username)
+	{
+		for(int i = 0; i < playersLength;i++) {
+			if(players[i].getName().equals(username)) {
+				if(i == 1) {
+					playersLength--;
+					players[i] = null;
+					i = playersLength;
+				}
+				if(i == 0) {
+					if(playersLength == 2) {
+						players[i] = players[i+1];
+						players[i+1] = null;
+						playersLength--;
+						i = playersLength;
+					}
+					else {
+						players[i] = null;
+						playersLength--;
+						i = playersLength;
+					}
+				}
+				
+			}
+		}
+	}
 }

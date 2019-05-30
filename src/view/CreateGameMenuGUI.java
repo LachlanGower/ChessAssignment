@@ -13,8 +13,10 @@ import javafx.scene.text.Text;
 public class CreateGameMenuGUI extends Group
 {	
 	private PlayerModalGUI[] players;
+	private GraphicsEngine gui;
 	public CreateGameMenuGUI(GraphicsEngine gui) {
 		players = new PlayerModalGUI[2];
+		this.gui = gui;
 		
 		Group playerCreateModal = new Group();
 		
@@ -61,8 +63,24 @@ public class CreateGameMenuGUI extends Group
 
 	public void addPlayerModal(int length, String username)
 	{
-		players[length] = new PlayerModalGUI(username);
+		players[length] = new PlayerModalGUI(gui, username, this);
 		players[length].setLayoutY(length * 120);
 		getChildren().add(players[length]);
+	}
+	
+	public void removePlayerModal(String username) {
+		for(int i = 0 ; i < players.length;i++) {
+			if(players[i].username.equals(username)) {
+				getChildren().remove(players[i]);
+				if(i == 0) {
+					players[0] = players[1];
+					players[0].setLayoutY(i*120);
+				}
+				else if(i == 1) {
+					players[1] = null;
+				}
+				i = players.length;
+			}
+		}
 	}
 }

@@ -29,6 +29,10 @@ public class Player {
 	public String getName() {
 		return name;
 	}
+	
+	public String getPassword() {
+		return password;
+	}
 
 	public ChessColour getColour() {
 		return colour;
@@ -41,6 +45,9 @@ public class Player {
 		else if(colour == ChessColour.BLACK)
 			return "Black";
 		return "";
+	}
+	public String toString() {
+		return name + password;
 	}
 
 }

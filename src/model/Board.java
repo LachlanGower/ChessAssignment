@@ -1,5 +1,6 @@
 package model;
 
+import exceptions.CoordinateOutOfBoundsException;
 import exceptions.IllegalMoveException;
 import exceptions.PieceNullPointerException;
 
@@ -52,12 +53,7 @@ public class Board
 	}
 	public int splitPiece(Coord xy, Coord newXY, ChessColour colour) throws PieceNullPointerException, IllegalMoveException {
 		Piece piece = getPiece(xy);
-		System.out.println(piece.toString());
 		Piece pieceSplit = piece.splitType(piece.getMergeType());
-		
-		System.out.println(pieceSplit.toString());
-		
-		System.out.println(piece.toString());
 
 		int score = -1;
 		if (piece.getMoveStrategy().isLegalMove(xy.getX()-newXY.getX(), xy.getY()-newXY.getY(), board[(xy.getX()+newXY.getX()) /2][(xy.getY()+newXY.getY()) /2]))
@@ -202,5 +198,20 @@ public class Board
 		//RECREATE THIS FUNCTION
 		String boardString = "";
 		return boardString;
+	}
+	public boolean isShitMove(Coord select, int x, int y) throws IllegalMoveException, PieceNullPointerException, CoordinateOutOfBoundsException
+	{
+		Piece selectedPiece = this.getPiece(select);
+		ChessColour c = selectedPiece.getColour();
+		for(int i = 0;i < 6;i++) {
+			for(int j = 0; j < 6;j++) {
+				if(board[i][j] != null && board[i][j].getColour() != c) {
+					if(validateMove(new Coord(i,j), x, y)) {
+						return true;
+					}
+				}
+			}
+		}
+		return false;
 	}
 }

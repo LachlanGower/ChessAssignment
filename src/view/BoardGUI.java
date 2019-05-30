@@ -1,5 +1,7 @@
 package view;
 
+import com.sun.prism.paint.Color;
+
 import controller.DeselectPieceHandler;
 import controller.SplitPieceHandler;
 import exceptions.CoordinateOutOfBoundsException;
@@ -20,7 +22,7 @@ public class BoardGUI extends Group
 	Text turns;
 	PieceGUI[] pieces = new PieceGUI[12];
 	SelectCollision[] selectCells = new SelectCollision[12];
-	MoveCollision[] moveCells = new MoveCollision[20];
+	MoveCollision[] moveCells = new MoveCollision[16];
 	GraphicsEngine gui;
 	Button deselect;
 	Button split;
@@ -144,7 +146,13 @@ public class BoardGUI extends Group
 					Coord select = gui.getGameEngine().getGameState().getSelectedPiece();
 					if(select != null) {
 						if(gui.getGameEngine().getBoard().validateMove(select,x,y)){
-							moveCells[moveLength] = new MoveCollision(gui,this, x, y);
+							//pass Colour value
+							if(gui.getGameEngine().getBoard().isShitMove(select, x, y)){
+								moveCells[moveLength] = new MoveCollision(gui,this, x, y, javafx.scene.paint.Color.RED);
+							}
+							else {
+								moveCells[moveLength] = new MoveCollision(gui,this, x, y, javafx.scene.paint.Color.LIME);
+							}
 							getChildren().add(moveCells[moveLength]);
 							moveLength++;
 						}

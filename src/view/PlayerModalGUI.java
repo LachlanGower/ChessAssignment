@@ -1,15 +1,21 @@
 package view;
 
+import controller.RemovePlayerHandler;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 public class PlayerModalGUI extends Group
 {
 	TextField turnCount;
-	public PlayerModalGUI(String username) {
+	CreateGameMenuGUI createGameMenuGUI;
+	public String username;
+	
+	public PlayerModalGUI(GraphicsEngine gui, String username, CreateGameMenuGUI cgm) {
+		this.username = username;
 		Text text = new Text(username);
 		text.setX(320);
 		text.setY(50);
@@ -25,6 +31,7 @@ public class PlayerModalGUI extends Group
 		turnCount.setLayoutY(70);
 		
 		Button removePlayer = new Button("Remove Player");
+		removePlayer.addEventFilter(MouseEvent.MOUSE_CLICKED, new RemovePlayerHandler(gui, username, cgm));
 	    removePlayer.setLayoutX(320);
 	    removePlayer.setLayoutY(100);
 	    
